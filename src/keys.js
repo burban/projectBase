@@ -2,7 +2,7 @@ module.exports = {
     database: {
         host: 'localhost',
         user: 'root',
-        pass: 'root',
+        password: 'root',
         database: 'intramq'
     }
 };

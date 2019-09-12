@@ -17,11 +17,11 @@ ALTER TABLE users
 
 --   Links Enlaces
 CREATE TABLE links(
-    id INT(11) not null,
-    title varchar(150) NOT null,
-    url varchar(250) not null,
+    id INT(11) NOT NULL,
+    title varchar(150) NOT NULL,
+    url varchar(250) NOT NULL,
     descripcion TEXT,
-    user_id int(11) NOT NULL,
+    user_id int(11),
     created_at timestamp NOT NULL DEFAULT current_timestamp,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
 );
