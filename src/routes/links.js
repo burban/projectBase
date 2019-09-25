@@ -17,9 +17,10 @@ router.post('/add', async(req, res) => {
 
     await pool.query('Insert into links set ?', [newLink]);
 
-    res.send('Recibido...');
+    res.redirect('/links'); /**Redirige al listado de Linkls */
 });
 
+/*Lista los links guardados */
 router.get('/', async(req, res) => {
 
     const links = await pool.query('Select * from links;');
