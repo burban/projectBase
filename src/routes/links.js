@@ -14,7 +14,7 @@ router.post('/add', async(req, res) => {
         url,
         descripcion: description
     };
-
+    /** LAS VALIDACIONES */
     await pool.query('Insert into links set ?', [newLink]);
 
     res.redirect('/links'); /**Redirige al listado de Linkls */
@@ -28,6 +28,36 @@ router.get('/', async(req, res) => {
     res.render('links/list', { links }); /*Renderiza la vista y envia la data de BBDD */
 
 });
+
+
+
+router.get('/edit/:id', async(req, res) => {
+
+    const { id } = req.params;
+
+    const links = await pool.query('Select * from links where id = ?', [id]);
+
+    res.render('links/edit', { link: links[0] });
+});
+
+router.post('/edit/:id', async(req, res) => {
+
+    const { id } = req.params;
+    const { title, url, description } = req.body;
+    const linkEdit = {
+        title,
+        url,
+        descripcion: description
+    };
+
+    /** LAS VALIDACIONES */
+
+    await pool.query('UPDATE links set ? WHERE id = ?', [linkEdit, id]);
+
+    res.redirect('/links');
+
+});
+
 
 router.get('/delete/:id', async(req, res) => {
 
