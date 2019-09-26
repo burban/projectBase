@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const pool = require('../database.js');
 
 router.get('/add', (req, res) => {
@@ -16,7 +15,7 @@ router.post('/add', async(req, res) => {
     };
     /** LAS VALIDACIONES */
     await pool.query('Insert into links set ?', [newLink]);
-
+    req.flash('success', 'Link guardado correctamente !');
     res.redirect('/links'); /**Redirige al listado de Linkls */
 });
 
@@ -28,7 +27,6 @@ router.get('/', async(req, res) => {
     res.render('links/list', { links }); /*Renderiza la vista y envia la data de BBDD */
 
 });
-
 
 
 router.get('/edit/:id', async(req, res) => {
@@ -53,16 +51,17 @@ router.post('/edit/:id', async(req, res) => {
     /** LAS VALIDACIONES */
 
     await pool.query('UPDATE links set ? WHERE id = ?', [linkEdit, id]);
-
+    req.flash('success', 'Link actualizado correctamente !');
     res.redirect('/links');
 
 });
-
 
 router.get('/delete/:id', async(req, res) => {
 
     const { id } = req.params;
     await pool.query('DELETE FROM links WHERE id = ?', [id]);
+
+    req.flash('success', 'Link removido correctamente !');
     res.redirect('/links');
 
 });
